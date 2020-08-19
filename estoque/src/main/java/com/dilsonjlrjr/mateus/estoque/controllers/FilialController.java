@@ -1,7 +1,11 @@
 package com.dilsonjlrjr.mateus.estoque.controllers;
 
+import com.dilsonjlrjr.mateus.estoque.model.Filial;
 import com.dilsonjlrjr.mateus.estoque.model.dto.FilialDTO;
+import com.dilsonjlrjr.mateus.estoque.services.FilialService;
 import lombok.extern.log4j.Log4j2;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,9 +21,18 @@ import java.util.Map;
 @Log4j2
 public class FilialController {
 
+    @Autowired
+    FilialService filialService;
+
+    @Autowired
+    ModelMapper modelMapper;
+
     @PostMapping
-    public ResponseEntity<FilialDTO> created(@Valid @RequestBody FilialDTO filialDTO) {
-        return new ResponseEntity<>(filialDTO, HttpStatus.CREATED);
+    public ResponseEntity<HttpStatus> created(@Valid @RequestBody FilialDTO filialDTO) {
+        Filial filial = this.modelMapper.map(filialDTO, Filial.class);
+        filialService.createFilial(filial);
+
+        return new ResponseEntity<>(HttpStatus.CREATED, HttpStatus.CREATED);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
