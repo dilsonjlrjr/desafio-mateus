@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dilsonjlrjr.mateus.estoque.mapper.ProdutoMapper">
+    <resultMap id="resultMapProduto" type="com.dilsonjlrjr.mateus.estoque.model.Produto">
+        <id column="PK02_INT_IDPRODUTO" property="id" />
+        <result column="PK02_VARCHAR_NOME" property="nome"/>
+        <association property="filial" column="FK02_01_INT_IDFILIAL"
+                     foreignColumn="PK01_INT_IDFILIAL" javaType="com.dilsonjlrjr.mateus.estoque.model.Filial"
+                     resultMap="com.dilsonjlrjr.mateus.estoque.mapper.FilialMapper.resultMapFilial" />
+    </resultMap>
+
+    <select id="findById" resultMap="resultMapProduto">
+        SELECT  *
+        FROM    ES02PRODUTO AS PROD
+                INNER JOIN ES01FILIAL AS FILIAL ON PROD.FK02_01_INT_IDFILIAL = FILIAL.PK01_INT_IDFILIAL
+        WHERE   PROD.PK02_INT_IDPRODUTO = #{id}
+    </select>
+</mapper>
