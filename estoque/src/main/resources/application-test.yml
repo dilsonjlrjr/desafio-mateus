@@ -1,3 +1,8 @@
 spring:
   datasource:
     url: jdbc:h2:mem:testdb
+    platform: test
+mybatis:
+  type-aliases-package: com.dilsonjlrjr.mateus.estoque.model
+  type-handlers-package: com.dilsonjlrjr.mateus.estoque.model.typehandler
+  mapper-locations: classpath*:**/mappers/*Mapper.xml
