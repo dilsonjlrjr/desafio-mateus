@@ -1,16 +1,17 @@
 package com.dilsonjlrjr.mateus.estoque.controllers;
 
+import com.dilsonjlrjr.mateus.estoque.exceptions.services.FilialServiceException;
 import com.dilsonjlrjr.mateus.estoque.model.Filial;
 import com.dilsonjlrjr.mateus.estoque.model.dto.FilialDTO;
 import com.dilsonjlrjr.mateus.estoque.services.FilialService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.BDDMockito;
 import org.mockito.Captor;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -105,5 +106,27 @@ class FilialControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("Size").value("O nome deve ter no mínimo 5 e limite máximo de 200 caracteres."));
 
+    }
+
+    @Test()
+    void shoulTestFilialServiceException() throws Exception {
+        //#region Cenário
+        FilialDTO filialDTO = new FilialDTO();
+        filialDTO.setId(1);
+        filialDTO.setNome("Mateus");
+
+        String jsonContent = new ObjectMapper().writeValueAsString(filialDTO);
+        //#endregion
+
+        MockHttpServletRequestBuilder requestPost = mountRequestPost(jsonContent);
+
+        BDDMockito
+                .willThrow(new FilialServiceException("Não foi possível adicionar a filial"))
+                .given(this.filialService).createFilial(Mockito.any(Filial.class));
+
+        this.mockMvc.perform(requestPost)
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("error").value("Não foi possível adicionar a filial"));
     }
 }
