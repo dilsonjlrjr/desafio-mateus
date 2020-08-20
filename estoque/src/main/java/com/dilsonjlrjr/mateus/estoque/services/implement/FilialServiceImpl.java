@@ -20,7 +20,6 @@ public class FilialServiceImpl implements FilialService {
         try {
             filialMapper.save(filial);
         } catch (Exception e) {
-            log.error(e.getMessage());
             throw new FilialServiceException("Ocorreu um erro ao salvar uma Filial", e);
         }
     }

@@ -1,6 +1,6 @@
 package com.dilsonjlrjr.mateus.estoque.mapper;
 
-import com.dilsonjlrjr.mateus.estoque.model.Produto;
+import com.dilsonjlrjr.mateus.estoque.model.Estoque;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,24 +11,28 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
+@ExtendWith(SpringExtension.class)
 @Sql(
         scripts = { "classpath:/esquema_destroy_schema.sql", "classpath:/estoque_schema.sql", "classpath:/estoque_data.sql" }
 )
-public class ProdutoMapperTest {
+public class EstoqueMapperTest {
 
     @Autowired
-    ProdutoMapper produtoMapper;
+    EstoqueMapper estoqueMapper;
+
+    int idProduct = 2;
 
     @Test
-    void shouldFindProductById() {
-        // Cenário e Execução
-        Produto produto = produtoMapper.findById(1);
+    void shouldGetOneProductStock() {
 
-        //Validação
-        Assertions.assertEquals(produto.getId(), 1);
-        Assertions.assertEquals(produto.getNome(), "MAÇÃ");
-        Assertions.assertEquals(produto.getFilial().getNome(), "NOSSO CHEFF");
+        Estoque estoque = estoqueMapper.findByProduct(idProduct);
+
+        Assertions.assertEquals(30, estoque.getQuantidade());
+        Assertions.assertEquals("PIZZA", estoque.getProduto().getNome());
+    }
+
+    void shouldInsertProductStock() {
+
     }
 }
