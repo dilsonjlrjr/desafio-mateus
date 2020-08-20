@@ -8,7 +8,7 @@
                      resultMap="com.dilsonjlrjr.mateus.estoque.mapper.ProdutoMapper.resultMapProdutoNoEmpresa"/>
     </resultMap>
 
-    <update id="updateStock">
+    <update id="update">
         UPDATE  ES05ESTOQUE
         SET     ES05_INT_QUANTIDADE = #{quantidade}
         WHERE   FK05_02_INT_IDPRODUTO = #{produto.id}

@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EstoqueMapper {
 
-    void updateStock(@Param("estoque") Estoque estoque);
+    void update(@Param("estoque") Estoque estoque);
     Estoque findByProduct(@Param("id") int id);
 }

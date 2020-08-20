@@ -5,20 +5,22 @@ import com.dilsonjlrjr.mateus.estoque.mapper.FilialMapper;
 import com.dilsonjlrjr.mateus.estoque.model.Filial;
 import com.dilsonjlrjr.mateus.estoque.services.FilialService;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @Log4j2
 public class FilialServiceImpl implements FilialService {
 
-    @Autowired
     FilialMapper filialMapper;
+
+    public FilialServiceImpl(FilialMapper filialMapper) {
+        this.filialMapper = filialMapper;
+    }
 
     @Override
     public void createFilial(Filial filial) throws FilialServiceException {
         try {
-            filialMapper.save(filial);
+            this.filialMapper.save(filial);
         } catch (Exception e) {
             throw new FilialServiceException("Ocorreu um erro ao salvar uma Filial", e);
         }
