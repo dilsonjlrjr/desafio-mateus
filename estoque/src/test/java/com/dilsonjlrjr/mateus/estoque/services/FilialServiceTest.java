@@ -57,6 +57,7 @@ public class FilialServiceTest {
                 .when(filialMapper)
                 .save(Mockito.any(Filial.class));
 
+
         Assertions.assertThrows(FilialServiceException.class, () -> {
             this.filialService.createFilial(filial);
         });
