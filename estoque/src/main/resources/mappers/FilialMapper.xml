@@ -7,7 +7,7 @@
         <result property="nome" column="ES01_VARCHAR_NOME"/>
     </resultMap>
 
-    <insert id="save" useGeneratedKeys="true">
+    <insert id="save" useGeneratedKeys="true" keyProperty="filial.id">
         INSERT INTO ES01FILIAL(ES01_VARCHAR_NOME) VALUES (#{filial.nome})
     </insert>
 

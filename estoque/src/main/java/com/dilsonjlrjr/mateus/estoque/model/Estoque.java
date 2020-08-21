@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Estoque {
-    int id;
-    int quantidade;
+    Integer id;
+    Integer quantidade;
     Produto produto;
 }
