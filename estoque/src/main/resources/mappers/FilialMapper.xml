@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dilsonjlrjr.mateus.estoque.mapper.FilialMapper">
+    <!-- ResultMaps -->
+    <resultMap id="resultMapFilial" type="com.dilsonjlrjr.mateus.estoque.model.Filial">
+        <id property="id" column="PK01_INT_IDFILIAL"/>
+        <result property="nome" column="ES01_VARCHAR_NOME"/>
+    </resultMap>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="filial.id">
+        INSERT INTO ES01FILIAL(ES01_VARCHAR_NOME) VALUES (#{filial.nome})
+    </insert>
+
+    <select id="findById" resultMap="resultMapFilial">
+        SELECT * FROM ES01FILIAL WHERE PK01_INT_IDFILIAL = #{id}
+    </select>
+</mapper>

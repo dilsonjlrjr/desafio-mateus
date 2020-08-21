@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dilsonjlrjr.mateus.estoque.mapper.EstoqueMapper">
+    <resultMap id="resultMapEstoqueWithProduto" type="com.dilsonjlrjr.mateus.estoque.model.Estoque">
+        <id column="PK05_INT_IDESTOQUE" property="id"/>
+        <result column="ES05_INT_QUANTIDADE" property="quantidade"/>
+        <association property="produto" column="FK05_02_INT_IDPRODUTO" foreignColumn="PK02_INT_IDPRODUTO"
+                     resultMap="com.dilsonjlrjr.mateus.estoque.mapper.ProdutoMapper.resultMapProdutoNoEmpresa"/>
+    </resultMap>
+
+    <update id="update">
+        UPDATE  ES05ESTOQUE
+        SET     ES05_INT_QUANTIDADE = #{quantidade}
+        WHERE   FK05_02_INT_IDPRODUTO = #{produto.id}
+    </update>
+
+    <select id="findByProduct" resultMap="resultMapEstoqueWithProduto">
+        SELECT  *
+        FROM    ES05ESTOQUE
+                INNER JOIN ES02PRODUTO ON ES05ESTOQUE.FK05_02_INT_IDPRODUTO = ES02PRODUTO.PK02_INT_IDPRODUTO
+        WHERE   FK05_02_INT_IDPRODUTO = #{id}
+    </select>
+</mapper>
